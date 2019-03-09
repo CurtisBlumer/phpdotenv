@@ -12,14 +12,8 @@ use Dotenv\Exception\InvalidPathException;
  * It's responsible for loading a `.env` file in the given directory and
  * setting the environment variables.
  */
-class Dotenv implements DotenvInterface
+interface DotenvInterface
 {
-    /**
-     * The loader instance.
-     *
-     * @var \Dotenv\Loader
-     */
-    protected $loader;
 
     /**
      * Create a new dotenv instance.
@@ -28,10 +22,7 @@ class Dotenv implements DotenvInterface
      *
      * @return void
      */
-    public function __construct(Loader $loader)
-    {
-        $this->loader = $loader;
-    }
+    public function __construct(Loader $loader);
 
     /**
      * Create a new dotenv instance.
@@ -42,16 +33,7 @@ class Dotenv implements DotenvInterface
      *
      * @return \Dotenv\Dotenv
      */
-    public static function create($paths, $file = null, FactoryInterface $envFactory = null)
-    {
-        $loader = new Loader(
-            self::getFilePaths((array) $paths, $file ?: '.env'),
-            $envFactory ?: new DotenvFactory(),
-            true
-        );
-
-        return new self($loader);
-    }
+    public static function create($paths, $file = null, FactoryInterface $envFactory = null);
 
     /**
      * Returns the full paths to the files.
@@ -61,12 +43,7 @@ class Dotenv implements DotenvInterface
      *
      * @return string[]
      */
-    private static function getFilePaths(array $paths, $file)
-    {
-        return array_map(function ($path) use ($file) {
-            return rtrim($path, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$file;
-        }, $paths);
-    }
+    private static function getFilePaths(array $paths, $file);
 
     /**
      * Load environment file in given directory.
@@ -75,10 +52,7 @@ class Dotenv implements DotenvInterface
      *
      * @return array<string|null>
      */
-    public function load()
-    {
-        return $this->loadData();
-    }
+    public function load();
 
     /**
      * Load environment file in given directory, silently failing if it doesn't exist.
@@ -87,15 +61,7 @@ class Dotenv implements DotenvInterface
      *
      * @return array<string|null>
      */
-    public function safeLoad()
-    {
-        try {
-            return $this->loadData();
-        } catch (InvalidPathException $e) {
-            // suppressing exception
-            return [];
-        }
-    }
+    public function safeLoad();
 
     /**
      * Load environment file in given directory.
@@ -104,24 +70,7 @@ class Dotenv implements DotenvInterface
      *
      * @return array<string|null>
      */
-    public function overload()
-    {
-        return $this->loadData(true);
-    }
-
-    /**
-     * Actually load the data.
-     *
-     * @param bool $overload
-     *
-     * @throws \Dotenv\Exception\InvalidPathException|\Dotenv\Exception\InvalidFileException
-     *
-     * @return array<string|null>
-     */
-    protected function loadData($overload = false)
-    {
-        return $this->loader->setImmutable(!$overload)->load();
-    }
+    public function overload();
 
     /**
      * Required ensures that the specified variables exist, and returns a new validator object.
@@ -130,18 +79,12 @@ class Dotenv implements DotenvInterface
      *
      * @return \Dotenv\Validator
      */
-    public function required($variables)
-    {
-        return new Validator((array) $variables, $this->loader);
-    }
+    public function required($variables);
 
     /**
      * Get the list of environment variables declared inside the 'env' file.
      *
      * @return string[]
      */
-    public function getEnvironmentVariableNames()
-    {
-        return $this->loader->getEnvironmentVariableNames();
-    }
+    public function getEnvironmentVariableNames();
 }

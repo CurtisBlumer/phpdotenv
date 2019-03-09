@@ -9,7 +9,7 @@ use Dotenv\Exception\ValidationException;
  *
  * It's responsible for applying validations against a number of variables.
  */
-class Validator
+class Validator implements ValidatorInterface
 {
     /**
      * The variables to validate.

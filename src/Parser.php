@@ -4,7 +4,7 @@ namespace Dotenv;
 
 use Dotenv\Exception\InvalidFileException;
 
-class Parser
+class Parser extends AbstractParser
 {
     const INITIAL_STATE = 0;
     const UNQUOTED_STATE = 1;

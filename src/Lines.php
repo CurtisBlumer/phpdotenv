@@ -2,7 +2,7 @@
 
 namespace Dotenv;
 
-class Lines
+class Lines implements LinesInterface
 {
     /**
      * Process the array of lines of environment variables.

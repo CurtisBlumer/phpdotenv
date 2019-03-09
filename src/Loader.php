@@ -16,7 +16,7 @@ use PhpOption\Option;
  * - multiline variable look always start with a " and end with it, e.g: `key="value
  *                                                                             value"`
  */
-class Loader
+class Loader extends AbstractLoader
 {
     /**
      * The file paths.

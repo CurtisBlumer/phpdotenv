@@ -2,24 +2,21 @@
 
 namespace Dotenv\Regex;
 
-abstract class Result implements ResultInterface
+interface ResultInterface
 {
     /**
      * Get the success option value.
      *
      * @return \PhpOption\Option
      */
-    abstract public function success();
+    public function success();
 
     /**
      * Get the error value, if possible.
      *
      * @return string
      */
-    public function getSuccess()
-    {
-        return $this->success()->get();
-    }
+    public function getSuccess();
 
     /**
      * Map over the success value.
@@ -28,24 +25,21 @@ abstract class Result implements ResultInterface
      *
      * @return \Dotenv\Regex\Result
      */
-    abstract public function mapSuccess(callable $f);
+    public function mapSuccess(callable $f);
 
     /**
      * Get the error option value.
      *
      * @return \PhpOption\Option
      */
-    abstract public function error();
+    public function error();
 
     /**
      * Get the error value, if possible.
      *
      * @return string
      */
-    public function getError()
-    {
-        return $this->error()->get();
-    }
+    public function getError();
 
     /**
      * Map over the error value.
@@ -54,5 +48,5 @@ abstract class Result implements ResultInterface
      *
      * @return \Dotenv\Regex\Result
      */
-    abstract public function mapError(callable $f);
+    public function mapError(callable $f);
 }
